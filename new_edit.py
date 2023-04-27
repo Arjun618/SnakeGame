@@ -11,11 +11,11 @@ pygame.init()
 # width, height
 screen = pygame.display.set_mode((1000, 800))
 background_image = pygame.image.load("home.jpg")
-play_button_image = pygame.image.load("play11.jpg")
+play_button_image = pygame.image.load("start.png")
 
 # Blit the images to the screen
 screen.blit(background_image, (0, 0))
-screen.blit(play_button_image, (1000 // 2 - play_button_image.get_width() // 2, 800 // 2 - play_button_image.get_height() // 2))
+screen.blit(play_button_image, (1000 // 4 - play_button_image.get_width() // 2, 800 // 2 - play_button_image.get_height() // 2))
 
 # Update the screen
 pygame.display.update()
@@ -31,7 +31,7 @@ while game_running:
             # Check if the mouse was clicked on the play button
             mouse_pos = pygame.mouse.get_pos()
             play_button_rect = play_button_image.get_rect()
-            play_button_rect.center = (1000// 2, 800 // 2)
+            play_button_rect.center = (1000// 4, 800 // 2)
             if play_button_rect.collidepoint(mouse_pos):
                 
 
@@ -103,7 +103,8 @@ while game_running:
                 #     snake_body_img.append(pygame.image.load("snake copy.png"))
 
                 color=(0,0,0)
-
+                gameover=pygame.image.load("gameover.png")
+                play_again=pygame.image.load("play_again.png")
                 running = True
                 # game loop
                 # infinitely running
@@ -164,7 +165,11 @@ while game_running:
 
                     collision = is_collision( snake_bodyX[0],  snake_bodyY[0], fruitX, fruitY)
                     
-                
+                    if snake_head_state=="rest":
+                        end_sound=mixer.Sound("game over.mp3")
+                        end_sound.play()
+                        screen.blit(gameover,(0,33))
+                        screen.blit(play_again,(450,550))
                         
                         
 
@@ -200,3 +205,4 @@ while game_running:
                     time.sleep(0.1)
                     # updating screen in continuous time
                     pygame.display.update()
+            
